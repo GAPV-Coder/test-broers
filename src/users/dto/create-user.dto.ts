@@ -12,7 +12,7 @@ export class CreateUserDto {
     @IsEmail({}, { message: 'Invalid email address' })
     email: string;
 
-    @ApiProperty({ description: 'User password', example: 'pass123' })
+    @ApiProperty({ description: 'Password for the user account (minimum 6 characters)', example: 'pass12' })
     @IsString({ message: 'Password must be a string' })
     @MinLength(6, { message: 'Password must be at least 6 characters long' })
     password: string;
