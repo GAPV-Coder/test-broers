@@ -73,8 +73,9 @@ export class AuthService {
                     expiresIn: '1h',
                 }),
             };
-        } catch {
-            throw new UnauthorizedException('Token de actualización inválido');
+        } catch (error) {
+            console.error('Error en jwt.verify:', error); // Depuración
+            throw new UnauthorizedException('Invalid update token');
         }
     }
 
@@ -85,10 +86,10 @@ export class AuthService {
         }
 
         const resetToken = uuidv4();
-        const resetExpires = new Date(Date.now() + 3600000); // 1 hora
+        const resetExpires = new Date(Date.now() + 3600000);
         await this.usersService.updateResetToken(user._id, resetToken, resetExpires);
 
-        const resetLink = `http://localhost:3000/autenticacion/restablecer-contrasena/${resetToken}`;
+        const resetLink = `http://localhost:3000/authentication/reset-password/${resetToken}`;
         await this.emailService.sendMail(
             email,
             'Password Reset Request',
