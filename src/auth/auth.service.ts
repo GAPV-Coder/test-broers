@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { UsersService } from '../users/users.service';
-import { EmailService } from 'src/common/services/email.service';
+import { EmailService } from '../common/services/email.service';
 import { LoginDto } from './dto/login.dto';
 
 @Injectable()
