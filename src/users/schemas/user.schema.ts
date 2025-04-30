@@ -23,6 +23,8 @@ export class User extends Document {
 
     @Prop({ default: null })
     resetPasswordExpires?: Date;
+
+    declare _id: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User); 

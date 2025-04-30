@@ -66,4 +66,33 @@ export class UsersService {
     async findByEmail(email: string): Promise<User | null> {
         return this.userModel.findOne({ email }).exec();
     }
+
+    async updateResetToken(id: string, resetToken: string, resetExpires: Date): Promise<void> {
+        await this.userModel
+            .findByIdAndUpdate(id, {
+                resetPasswordToken: resetToken,
+                resetPasswordExpires: resetExpires,
+            })
+            .exec();
+    }
+
+    async findByResetToken(token: string): Promise<User | null> {
+        return this.userModel
+            .findOne({
+                resetPasswordToken: token,
+                resetPasswordExpires: { $gt: new Date() },
+            })
+            .exec();
+    }
+
+    async updatePasswordAndClearResetToken(id: string, newPassword: string): Promise<void> {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        await this.userModel
+            .findByIdAndUpdate(id, {
+                password: hashedPassword,
+                resetPasswordToken: null,
+                resetPasswordExpires: null,
+            })
+            .exec();
+    }
 }
