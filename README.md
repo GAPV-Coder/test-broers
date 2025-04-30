@@ -23,76 +23,115 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+User Management System API
+This is a RESTful API built with NestJS and MongoDB for managing user accounts and authentication. It provides endpoints for creating, reading, updating, and deleting users, as well as handling user authentication, token refresh, and password reset functionality.
 
-## Project setup
+## Table of Contents
 
-```bash
-$ npm install
-```
+* Getting Started
+  - Prerequisites
+  - Cloning the Repository
+  - Installing Dependencies
+  - Configuration
+  - Running the API
+* API Functionality
+* API Documentation
+* License
 
-## Compile and run the project
+## Getting Started
+Follow these steps to set up and run the API locally.
 
-```bash
-# development
-$ npm run start
+## Prerequisites
+Ensure you have the following installed:
 
-# watch mode
-$ npm run start:dev
+* Node.js (v18 or higher)
+* npm (v9 or higher)
+* MongoDB (local instance or MongoDB Atlas)
+* A Gmail account or other SMTP service for sending password reset emails
 
-# production mode
-$ npm run start:prod
-```
+## Cloning the Repository
+* Clone the repository from GitHub:
+git clone https://github.com/GAPV-Coder/test-broers.git
+cd test-broers
 
-## Run tests
+## Installing Dependencies
+* Install the required dependencies using npm:
+npm install
 
-```bash
-# unit tests
-$ npm run test
+## Configuration
+Create a .env file in the root directory of the project and add the following environment variables:
 
-# e2e tests
-$ npm run test:e2e
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/gestion-usuarios?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key
+JWT_REFRESH_SECRET=your_jwt_refresh_secret_key
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_app_specific_password
 
-# test coverage
-$ npm run test:cov
-```
 
-## Deployment
+* Replace <username> and <password> with your MongoDB Atlas credentials or local MongoDB connection details.
+* Use a secure, unique value for JWT_SECRET and JWT_REFRESH_SECRET.
+* For EMAIL_USER and EMAIL_PASS, use a Gmail account with an App Password if 2FA is enabled.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Running the API
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+1. Start the API in development mode:
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+npm run start:dev
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+The API will be available at http://localhost:3000.
 
-## Resources
+2. Seed the database (optional):
 
-Check out a few resources that may come in handy when working with NestJS:
+To populate the database with sample users, run:
+npm run seed
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+This creates two test users:
 
-## Support
+* Email: juan.perez@ejemplo.com, Password: contrasena123
+* Email: maria.gomez@ejemplo.com, Password: contrasena456
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## API Functionality
+The User Management System API provides the following features:
 
-## Stay in touch
+* User Management:
+  - Create new users with full name, email, and password.
+  - Retrieve a list of active users or a specific user by ID.
+  - Update user details (full name and email).
+  - Soft delete users (mark as inactive).
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+
+* Authentication:
+  - User login with email and password, returning JWT access and refresh tokens.
+  - Refresh access tokens using a refresh token.
+  - Request password reset via email.
+  - Reset password using a secure token.
+
+
+* Security:
+ - Passwords are hashed using bcrypt.
+ - Sensitive fields (e.g., password) are excluded from API responses.
+ - Protected endpoints require JWT authentication.
+
+
+
+The API uses MongoDB for data storage, NestJS for the backend framework, and Nodemailer for sending emails. It includes input validation with class-validator and error handling for robustness.
+
+## PI Documentation
+The API is documented using Swagger (OpenAPI). Once the API is running, access the interactive documentation at:
+URL: http://localhost:3000/api
+The Swagger UI provides detailed information about each endpoint, including:
+
+  * HTTP methods and paths.
+  * Request bodies and parameters.
+  * Example responses and error codes.
+  * Authentication requirements (JWT for protected endpoints).
+
+To test protected endpoints, use the Authorize button in Swagger to enter a Bearer <accessToken> obtained from the /autenticacion/login endpoint.
+
+## Author
+* Gustavo Pereira Villa
 
 ## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.
